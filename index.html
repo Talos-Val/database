@@ -264,6 +264,43 @@
 
   @keyframes pop { to { opacity: 1; } }
 
+  /* IMPRESSUM MODAL */
+  #imp-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 9998;
+    background: rgba(0,0,0,0.82);
+    align-items: center;
+    justify-content: center;
+  }
+  #imp-overlay.active { display: flex; }
+  #imp-box {
+    background: #030c03;
+    border: 1px solid var(--gd);
+    padding: 22px 26px;
+    max-width: 420px;
+    width: 90%;
+    font-size: .68rem;
+    line-height: 1.9;
+    position: relative;
+  }
+  #imp-box h2 {
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    color: var(--g);
+    margin-bottom: 10px;
+    letter-spacing: .1em;
+  }
+  #imp-box p { color: var(--wh); }
+  #imp-box .label { color: var(--gd); }
+  #imp-close {
+    position: absolute; top: 8px; right: 12px;
+    background: none; border: none;
+    color: var(--re); font-family: 'Share Tech Mono', monospace;
+    font-size: .75rem; cursor: pointer;
+  }
+  #imp-close:hover { text-shadow: 0 0 6px var(--re); }
+
   /* FOOTER TRIGGER BUTTON */
   .exit-trigger {
     font-family: 'Share Tech Mono', monospace;
@@ -620,7 +657,24 @@
     <span class="copy">&copy; Prince of Crows &mdash; All rights reserved</span>
     <button class="exit-trigger" id="pd-trigger">[ → project-data ]</button>
     <span>SID: 0x4P0C &nbsp;|&nbsp; <span style="color:var(--g)">TLS 1.3 ENCRYPTED</span></span>
+    <button class="exit-trigger" id="imp-trigger">[ → impressum ]</button>
   </footer>
+
+<!-- IMPRESSUM MODAL -->
+<div id="imp-overlay">
+  <div id="imp-box">
+    <button id="imp-close">[ X CLOSE ]</button>
+    <h2>// IMPRESSUM</h2>
+    <p>
+      <span class="label">Angaben gemäß § 5 TMG</span><br><br>
+      <span class="label">NAME &nbsp;&nbsp;&nbsp;·</span> Titus Wagner<br>
+      <span class="label">E-MAIL ·</span> <a href="mailto:wagner-titus@web.de" style="color:var(--cy)">wagner-titus@web.de</a><br><br>
+      <span class="label">HINWEIS</span><br>
+      Diese Website ist ein privates, nicht-kommerzielles Projekt.<br>
+      Keine Haftung für externe Links.
+    </p>
+  </div>
+</div>
 
 </div>
 
@@ -814,6 +868,12 @@
   pdGoBtn.addEventListener('click', pdGo);
   window.addEventListener('resize', pdResizeCanvas);
   // ESC intentionally disabled for this overlay
+
+  // IMPRESSUM
+  const impOverlay = document.getElementById('imp-overlay');
+  document.getElementById('imp-trigger').addEventListener('click', () => impOverlay.classList.add('active'));
+  document.getElementById('imp-close').addEventListener('click', () => impOverlay.classList.remove('active'));
+  impOverlay.addEventListener('click', e => { if(e.target === impOverlay) impOverlay.classList.remove('active'); });
 </script>
 
 </body>
